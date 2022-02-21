@@ -1,5 +1,7 @@
 package com.example.demo.testTaxiAggregator;
 
+import com.example.demo.testTaxiAggregator.DTO.BookingResponse;
+import com.example.demo.testTaxiAggregator.DTO.Car;
 import com.example.demo.testTaxiAggregator.connectors.IConnector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,12 +37,12 @@ public class AggregatorService {
         return cars;
     }
 
-    public boolean book(String startAddr, String endAddr, String aggregatorName, String userPhone, long idCar){
-        boolean result = false;
+    public BookingResponse book(String startAddr, String endAddr, String aggregatorName, String userPhone, long idCar){
+        BookingResponse result = new BookingResponse(false, "");
         for (IConnector connector : connectorsArray){
             try {
                 if (connector.getAggregatorName().equals(aggregatorName)) {
-                    CompletableFuture<Boolean> futureResult = connector.book(idCar, userPhone);
+                    CompletableFuture<BookingResponse> futureResult = connector.book(idCar, userPhone, startAddr, endAddr);
                     result = futureResult.get();
                     return result;
                 }
@@ -52,12 +54,12 @@ public class AggregatorService {
         return result;
     }
 
-    public boolean refuseBooking(String startAddr, String endAddr, String aggregatorName, String userPhone, long idCar){
-        boolean result = false;
+    public BookingResponse refuseBooking(String startAddr, String endAddr, String aggregatorName, String userPhone, long idCar){
+        BookingResponse result = new BookingResponse(false, "");
         for (IConnector connector : connectorsArray){
             try {
                 if (connector.getAggregatorName().equals(aggregatorName)) {
-                    CompletableFuture<Boolean> futureResult = connector.refuseBooking(idCar, userPhone);
+                    CompletableFuture<BookingResponse> futureResult = connector.refuseBooking(idCar, userPhone, startAddr, endAddr);
                     result = futureResult.get();
                     return result;
                 }

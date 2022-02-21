@@ -1,4 +1,4 @@
-package com.example.demo.testTaxiAggregator;
+package com.example.demo.testTaxiAggregator.DTO;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
