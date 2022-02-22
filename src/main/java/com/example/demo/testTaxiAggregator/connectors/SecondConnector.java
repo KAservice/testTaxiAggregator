@@ -13,28 +13,28 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 @Service
-public class FirstConnector implements IConnector {
+public class SecondConnector implements IConnector {
     RestTemplate restTemplate = new RestTemplate();
-    private String aggregatorName = "First";
+    private String aggregatorName = "Second";
 
     @Override
     @Async
     public CompletableFuture<List<Car>> getCars(String startAddr, String endAddr) {
-        List<Car> cars = restTemplate.postForObject("http://localhost:8888/getCars", new CarsConnectorRequest(startAddr, endAddr), ArrayList.class);
+        List<Car> cars = restTemplate.postForObject("http://localhost:8889/getCars", new CarsConnectorRequest(startAddr, endAddr), ArrayList.class);
         return CompletableFuture.completedFuture(cars);
     }
 
     @Override
     @Async
     public CompletableFuture<BookingResponse> book(long idCar, String userPhone, String startAddr, String endAddr) {
-        BookingResponse result = restTemplate.postForObject("http://localhost:8888/book",  new BookingConnectorRequest(idCar, userPhone, startAddr, endAddr),  BookingResponse.class);
+        BookingResponse result = restTemplate.postForObject("http://localhost:8889/book",  new BookingConnectorRequest(idCar, userPhone, startAddr, endAddr),  BookingResponse.class);
         return CompletableFuture.completedFuture(result);
     }
 
     @Override
     @Async
     public CompletableFuture<BookingResponse> refuseBooking(long idCar, String userPhone, String startAddr, String endAddr) {
-        BookingResponse result = restTemplate.postForObject("http://localhost:8888/refuseBooking",  new BookingConnectorRequest(idCar, userPhone, startAddr, endAddr),  BookingResponse.class);
+        BookingResponse result = restTemplate.postForObject("http://localhost:8889/refuseBooking",  new BookingConnectorRequest(idCar, userPhone, startAddr, endAddr),  BookingResponse.class);
         return CompletableFuture.completedFuture(result);
     }
 

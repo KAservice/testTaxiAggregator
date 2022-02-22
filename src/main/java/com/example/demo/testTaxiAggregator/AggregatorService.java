@@ -3,6 +3,8 @@ package com.example.demo.testTaxiAggregator;
 import com.example.demo.testTaxiAggregator.DTO.BookingResponse;
 import com.example.demo.testTaxiAggregator.DTO.Car;
 import com.example.demo.testTaxiAggregator.connectors.IConnector;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,8 @@ import java.util.concurrent.CompletableFuture;
 
 @Service
 public class AggregatorService {
+    private static final Logger logger =  LogManager.getLogger();
+
 
     @Autowired
     private IConnector[] connectorsArray;
@@ -31,7 +35,7 @@ public class AggregatorService {
             }
         }
         catch (Exception ex){
-
+            logger.error(ex);
         }
 
         return cars;
@@ -48,7 +52,7 @@ public class AggregatorService {
                 }
             }
             catch (Exception ex){
-
+                logger.error(ex);
             }
         }
         return result;
@@ -65,7 +69,7 @@ public class AggregatorService {
                 }
             }
             catch (Exception ex){
-
+                logger.error(ex);
             }
         }
         return result;
